@@ -24,10 +24,11 @@ function animationSlider(twn){
   document.body.appendChild(container);
   let containerDiv = document.querySelector("#container");
    containerDiv.style.width = w +"px";
-   containerDiv.style.height = "30px";
+   containerDiv.style.height = "50px";
    containerDiv.style.overflow = "hidden";
    containerDiv.style.position = "relative";
    containerDiv.style.top = (h+10)+"px";
+   containerDiv.style.backgroundColor="green"
 
   
 
@@ -37,7 +38,7 @@ function animationSlider(twn){
   slider.setAttribute("type", "range");
   slider.setAttribute("max", animDura);   
   slider.setAttribute("min", 0); 
-  slider.setAttribute("value", 3);          
+  slider.setAttribute("value", 0);          
   slider.setAttribute("id","slider");
   slider.setAttribute("step",0.01);    
   slider.setAttribute("onChange","updatePause()")  
@@ -48,22 +49,26 @@ function animationSlider(twn){
        sliderID.style.top="0px";  
 
     $("#slider").click(function(){
-               // tween.pause();
+               // twn.pause();
          pauseContainer.style.display ="none";
          playContainer.style.display ="block";
-               tween.pause(sliderID.value);
-         $("#slider").mousemove(function(){
+               twn.pause(sliderID.value);
+     
+}) 
+ 
+
+    $("#slider").mousemove(function(){
           // console.log(sliderID.value);
-          tween.pause(sliderID.value);
+          twn.pause(sliderID.value);
+         pauseContainer.style.display ="none";
+         playContainer.style.display ="block";
                   var timelineContainer = document.querySelector("#timelineCounter");
-                   var tweenTime = tween.time();
+                   var tweenTime = twn.time();
                    var twoDecimal =tweenTime.toFixed(2);
                   timelineContainer.innerHTML = twoDecimal;
                  clearInterval(updateInterval);
         })
-}) 
- 
-
+  
 /// playbutton
 
     var playDiv = document.createElement("div");
@@ -72,10 +77,11 @@ function animationSlider(twn){
     
     var playContainer = document.querySelector('#playContainer');
      playContainer.style.width="23px";
-     playContainer.style.top=(h)+"px";
+     playContainer.style.top=(h-20)+"px";
      playContainer.style.left="10px";
      playContainer.style.position="relative";
      playContainer.style.display="none";
+     playContainer.style.cursor="pointer";
     playContainer.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="10" height="16.912" viewBox="0 0 10 16.912"><path id="Path_1" data-name="Path 1" d="M463.078,326.535l10,8.456-10,8.456Z" transform="translate(-463.078 -326.535)"/></svg>'
 
 /// pause buttom
@@ -85,9 +91,10 @@ function animationSlider(twn){
     
     var pauseContainer = document.querySelector('#pauseContainer');
      pauseContainer.style.width="23px";
-     pauseContainer.style.top=(h)+"px";
+     pauseContainer.style.top=(h-20)+"px";
      pauseContainer.style.left="10px";
      pauseContainer.style.position="relative";
+     pauseContainer.style.cursor="pointer";
     pauseContainer.innerHTML='<svg id="Component_1_1" data-name="Component 1 – 1" xmlns="http://www.w3.org/2000/svg" width="10" height="13" viewBox="0 0 10 13"><rect id="Rectangle_1" data-name="Rectangle 1" width="4" height="13"/><rect id="Rectangle_2" data-name="Rectangle 2" width="4" height="13" transform="translate(6)"/></svg>'
     
 // timer 
@@ -97,41 +104,41 @@ var timelineCOunt = document.createElement("div");
 
 var timelineContainer = document.querySelector("#timelineCounter");
      timelineContainer.style.width="20px";
-     timelineContainer.style.top=(h-20)+"px";
+     timelineContainer.style.top=(h-37)+"px";
      timelineContainer.style.left="30px";
      timelineContainer.style.position="relative"
       timelineContainer.style.fontSize="14px"
-
-     timelineContainer.innerHTML =tween.time()
+  
+     timelineContainer.innerHTML =twn.time()
   
 
  $("#pauseContainer").click(function(){
-  tween.pause(sliderID.value);
+  twn.pause(sliderID.value);
    pauseContainer.style.display ="none";
    playContainer.style.display ="block";
      
 });  
 
  $("#playContainer").click(function(){
-  tween.play();
+  twn.play();
    pauseContainer.style.display ="block";
    playContainer.style.display ="none";
     callConst(slider,twn);
      
 });      
 
-    var myTimeout = setTimeout(callConst(slider), 5);
+    var myTimeout = setTimeout(callConst(slider,twn), 5);
 
 }
 
 
 
 
-    function callConst(v,t){
+    function callConst(v,twB){
               updateInterval= setInterval(function(){
-                  v.value=tween.time();
+                  v.value=twB.time();
                   var timelineContainer = document.querySelector("#timelineCounter");
-                   var tweenTime = t.time();
+                   var tweenTime = twB.time();
                    var twoDecimal =tweenTime.toFixed(2);
                   timelineContainer.innerHTML = twoDecimal;
                 // console.log(tween.time());
